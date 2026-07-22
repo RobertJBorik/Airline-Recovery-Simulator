@@ -1,6 +1,7 @@
 # Airline Recovery Simulator
 
 An event-driven airline operations simulator built in Python.
+Live Demo: https://airline-recovery-simulator.streamlit.app/
 
 ## Features
 
