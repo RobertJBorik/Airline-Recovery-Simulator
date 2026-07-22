@@ -1,0 +1,38 @@
+[
+  {
+    "code": "ATL",
+    "name": "Atlanta"
+  },
+  {
+    "code": "JFK",
+    "name": "New York (JFK)"
+  },
+  {
+    "code": "DTW",
+    "name": "Detroit"
+  },
+  {
+    "code": "MSP",
+    "name": "Minneapolis, St. Paul"
+  },
+    {
+    "code": "BOS",
+    "name": "Boston"
+  },
+  {
+    "code": "CLT",
+    "name": "Charolette"
+  },
+    {
+    "code": "MCO",
+    "name": "Orlando"
+  },
+  {
+    "code": "BNA",
+    "name": "Nashville"
+  },
+    {
+    "code": "STL",
+    "name": "St Louis"
+  }
+]

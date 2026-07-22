@@ -1,0 +1,63 @@
+[
+    {
+        "tail_number": "A001",
+        "base": "ATL"
+    },
+    {
+        "tail_number": "A002",
+        "base": "ATL"
+    },
+    {
+        "tail_number": "A003",
+        "base": "ATL"
+    },
+    {
+        "tail_number": "A004",
+        "base": "ATL"
+    },
+    {
+        "tail_number": "A005",
+        "base": "ATL"
+    },
+    {
+        "tail_number": "A006",
+        "base": "DTW"
+    },
+    {
+        "tail_number": "A007",
+        "base": "DTW"
+    },
+    {
+        "tail_number": "A008",
+        "base": "JFK"
+    },
+    {
+        "tail_number": "A009",
+        "base": "JFK"
+    },
+    {
+        "tail_number": "A010",
+        "base": "MSP"
+    },
+    {
+        "tail_number": "A011",
+        "base": "MSP"
+    },
+    {
+        "tail_number": "A012",
+        "base": "CLT"
+    },
+    {
+        "tail_number": "A013",
+        "base": "MCO"
+    },
+    {
+        "tail_number": "A014",
+        "base": "JFK"
+    },
+    {
+        "tail_number": "A015",
+        "base": "ATL",
+        "reserve": true
+    }
+]

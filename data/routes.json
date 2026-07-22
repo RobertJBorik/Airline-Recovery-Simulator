@@ -1,0 +1,135 @@
+[
+    {
+        "origin": "ATL",
+        "destination": "JFK",
+        "flight_time": 135,
+        "flights_per_day": 4,
+        "bidirectional": true
+    },
+    {
+        "origin": "ATL",
+        "destination": "MCO",
+        "flight_time": 100,
+        "flights_per_day": 4,
+        "bidirectional": true
+    },
+    {
+        "origin": "ATL",
+        "destination": "CLT",
+        "flight_time": 75,
+        "flights_per_day": 4,
+        "bidirectional": true
+    },
+    {
+        "origin": "ATL",
+        "destination": "DTW",
+        "flight_time": 120,
+        "flights_per_day": 3,
+        "bidirectional": true
+    },
+    {
+        "origin": "ATL",
+        "destination": "MSP",
+        "flight_time": 150,
+        "flights_per_day": 3,
+        "bidirectional": true
+    },
+    {
+        "origin": "ATL",
+        "destination": "STL",
+        "flight_time": 105,
+        "flights_per_day": 3,
+        "bidirectional": true
+    },
+    {
+        "origin": "ATL",
+        "destination": "BNA",
+        "flight_time": 60,
+        "flights_per_day": 3,
+        "bidirectional": true
+    },
+    {
+        "origin": "DTW",
+        "destination": "MSP",
+        "flight_time": 110,
+        "flights_per_day": 2,
+        "bidirectional": true
+    },
+    {
+        "origin": "DTW",
+        "destination": "STL",
+        "flight_time": 75,
+        "flights_per_day": 2,
+        "bidirectional": true
+    },
+    {
+        "origin": "MSP",
+        "destination": "STL",
+        "flight_time": 70,
+        "flights_per_day": 2,
+        "bidirectional": true
+    },
+    {
+        "origin": "JFK",
+        "destination": "BOS",
+        "flight_time": 60,
+        "flights_per_day": 4,
+        "bidirectional": true
+    },
+    {
+        "origin": "DTW",
+        "destination": "JFK",
+        "flight_time": 105,
+        "flights_per_day": 2,
+        "bidirectional": true
+    },
+    {
+        "origin": "MSP",
+        "destination": "JFK",
+        "flight_time": 150,
+        "flights_per_day": 2,
+        "bidirectional": true
+    },
+    {
+        "origin": "BOS",
+        "destination": "CLT",
+        "flight_time": 120,
+        "flights_per_day": 1,
+        "bidirectional": true
+    },
+    {
+        "origin": "CLT",
+        "destination": "MCO",
+        "flight_time": 100,
+        "flights_per_day": 2,
+        "bidirectional": true
+    },
+    {
+        "origin": "CLT",
+        "destination": "STL",
+        "flight_time": 110,
+        "flights_per_day": 1,
+        "bidirectional": true
+    },
+    {
+        "origin": "MCO",
+        "destination": "STL",
+        "flight_time": 125,
+        "flights_per_day": 1,
+        "bidirectional": true
+    },
+    {
+        "origin": "MCO",
+        "destination": "JFK",
+        "flight_time": 130,
+        "flights_per_day": 2,
+        "bidirectional": true
+    },
+    {
+        "origin": "BNA",
+        "destination": "STL",
+        "flight_time": 70,
+        "flights_per_day": 1,
+        "bidirectional": true
+    }
+]
