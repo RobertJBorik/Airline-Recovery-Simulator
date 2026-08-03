@@ -11,9 +11,6 @@ st.set_page_config(page_title="Airline Operations Recovery Simulator", page_icon
 
 st.title("Airline Operations Recovery & Delay Propagation Simulator")
 
-# -----------------------------
-# Load Data
-# -----------------------------
 @st.cache_data
 def load_data():
     results = pd.read_csv("results/simulation_results.csv")
@@ -34,7 +31,7 @@ with col1:
 
 with col2:
     st.metric(
-        "Average Daily Delay",
+        "Average Weekly Delay Minutes",
         f"{results_df['total_delay_minutes'].mean():.1f} min"
     )
 
@@ -49,7 +46,7 @@ with col3:
 with col4:
     st.metric(
         "Worst Single Flight Delay",
-        f"{flights_df['delay_minutes'].max()} min"
+        f"{results_df['max_delay'].max()} min"
     )
     
 overview_tab, analytics_tab, flights_tab, replay_tab = st.tabs(["Overview", "Analytics", "Flight Data", "Replay"])

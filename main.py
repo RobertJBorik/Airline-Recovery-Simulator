@@ -1,14 +1,15 @@
 import random
 import pandas as pd
+import copy
 
 from config import Config
 from loaders import load_airports, load_aircraft, load_routes
 from scheduler import generate_schedule
 from simulation import run_simulation
-from helper import collect_flight_results
+from helper import collect_flight_results, print_schedule
 
 
-def run_experiment(num_simulations=1000):
+def run_experiment(num_simulations=50):
     config = Config()
 
     airports = load_airports("data/airports.json")
@@ -18,16 +19,27 @@ def run_experiment(num_simulations=1000):
     master_rng = random.Random(config.random_seed)
     simulation_seeds = [master_rng.randint(0, 2**32 - 1) for _ in range(num_simulations)]
 
-    schedule = generate_schedule(aircraft, routes, config)
-
+    schedule = generate_schedule(airports, aircraft, routes, config)
+    
+    #print_schedule(schedule, aircraft, config)
+    
     sim_results = []
     flight_results = []
 
+    
+
     for i, seed in enumerate(simulation_seeds):
-        metrics = run_simulation(schedule, aircraft, routes, config, seed)
+        
+        if i % 100 == 0:
+            print(f"Simulation {i} currently running")
+            
+        sim_schedule = copy.deepcopy(schedule)
+        sim_aircraft = copy.deepcopy(aircraft)
+    
+        metrics = run_simulation(sim_schedule, sim_aircraft, routes, config, seed)
 
         sim_results.append(metrics)
-        flight_results.extend(collect_flight_results(schedule, i))
+        flight_results.extend(collect_flight_results(sim_schedule, i))
 
     results_df = pd.DataFrame(sim_results)
     flights_df = pd.DataFrame(flight_results)

@@ -3,38 +3,53 @@ def format_time(minutes):
     mins = minutes % 60
     return f"{hours:02}:{mins:02}"
 
-def print_schedule(schedule, aircraft, routes):
+def format_day_time(minutes, config):
 
-    print("\nRemaining Flights")
+    day = (minutes // config.day_minutes) + 1
+
+    day_minutes = minutes % config.day_minutes
+
+    hour = day_minutes // 60
+    minute = day_minutes % 60
+
+    return f"Day {day} {hour:02d}:{minute:02d}"
+
+def print_schedule(schedule, fleet, config):
+
+    print("\nAircraft Status")
     print("-" * 40)
-    for route in routes.values():
-        if route.remaining_flights > 0:
-            print(f"{route.origin} -> {route.destination}: {route.remaining_flights}")
-            
-    for plane in aircraft.values():
-        print(plane.tail_number, "base:", plane.base, "current:", plane.current_airport, "time:", plane.available_time)
-    
+
+    for plane in fleet.values():
+        print(
+            f"{plane.tail_number} | "
+            f"Base: {plane.base} | "
+            f"Current: {plane.current_airport} | "
+            f"Available: {format_day_time(plane.available_time, config)}"
+        )
+
+
     print("\nScheduled Flights")
-    print("-" * 40)  
-    print("=" * 80)
-    print(f"{'Flight':<8} {'Aircraft':<8} {'Route':<15} {'Departure':<10} {'Arrival':<10}")
-    print("=" * 80)
+    print("-" * 100)
+    print(f"{'Flight':<8} {'Aircraft':<10} {'Route':<15} {'Departure':<18} {'Arrival':<18} {'Time':<8}")
+    print("-" * 100)
 
     for flight in schedule:
+
         route = f"{flight.origin} → {flight.destination}"
 
         print(
             f"{flight.flight_id:<8} "
-            f"{flight.aircraft_id:<8} "
+            f"{flight.aircraft_id:<10} "
             f"{route:<15} "
-            f"{format_time(flight.scheduled_departure):<10} "
-            f"{format_time(flight.scheduled_arrival):<10}"
+            f"{flight.scheduled_departure:<5} "
+            f"{format_day_time(flight.scheduled_departure, config):<18} "
+            f"{format_day_time(flight.scheduled_arrival, config):<18} "
+            f"{flight.flight_time:<8}"
         )
 
-    print("=" * 80)
+    print("-" * 100)
     print(f"Total Flights Scheduled: {len(schedule)}")
     
-
 def reset_fleet(fleet):
 
     for plane in fleet.values():
@@ -47,9 +62,10 @@ def collect_flight_results(schedule, simulation):
 
     for flight in schedule:
         rows.append({
-            "simulation": simulation,
+            "simulation_num": simulation,
             "flight_id": flight.flight_id,
             "aircraft": flight.aircraft_id,
+            "simulation_day": flight.simulation_day,
             "origin": flight.origin,
             "destination": flight.destination,
             "scheduled_departure": flight.scheduled_departure,
@@ -60,9 +76,25 @@ def collect_flight_results(schedule, simulation):
             "weather_delay": flight.weather_delay,
             "gate_delay": flight.gate_delay,
             "maintenance_delay": flight.maintenance_delay,
+            "overnight_delay": flight.overnight_delay,
             "propagated_delay": flight.propagated_delay,
             "status": flight.status,
             "reason": flight.cancellation_reason,
+            
         })
 
     return rows
+
+def get_day_start(day, config):
+    return ((day - 1) * config.day_minutes) + config.operating_day_start
+
+
+def get_day_end(day, config):
+    return ((day - 1) * config.day_minutes) + config.operating_day_end
+
+
+def get_next_day_start(current_time, config):
+
+    current_day = current_time // config.day_minutes
+
+    return ((current_day + 1) * config.day_minutes + config.operating_day_start)

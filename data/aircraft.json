@@ -1,63 +1,42 @@
 [
-    {
-        "tail_number": "A001",
-        "base": "ATL"
-    },
-    {
-        "tail_number": "A002",
-        "base": "ATL"
-    },
-    {
-        "tail_number": "A003",
-        "base": "ATL"
-    },
-    {
-        "tail_number": "A004",
-        "base": "ATL"
-    },
-    {
-        "tail_number": "A005",
-        "base": "ATL"
-    },
-    {
-        "tail_number": "A006",
-        "base": "DTW"
-    },
-    {
-        "tail_number": "A007",
-        "base": "DTW"
-    },
-    {
-        "tail_number": "A008",
-        "base": "JFK"
-    },
-    {
-        "tail_number": "A009",
-        "base": "JFK"
-    },
-    {
-        "tail_number": "A010",
-        "base": "MSP"
-    },
-    {
-        "tail_number": "A011",
-        "base": "MSP"
-    },
-    {
-        "tail_number": "A012",
-        "base": "CLT"
-    },
-    {
-        "tail_number": "A013",
-        "base": "MCO"
-    },
-    {
-        "tail_number": "A014",
-        "base": "JFK"
-    },
-    {
-        "tail_number": "A015",
-        "base": "ATL",
-        "reserve": true
-    }
+    {"tail_number":"A001","base":"ATL"},
+    {"tail_number":"A002","base":"ATL"},
+    {"tail_number":"A003","base":"ATL"},
+    {"tail_number":"A004","base":"ATL"},
+    {"tail_number":"A005","base":"ATL"},
+    {"tail_number":"A006","base":"ATL"},
+    {"tail_number":"A007","base":"ATL"},
+    {"tail_number":"A008","base":"ATL"},
+    {"tail_number":"A009","base":"ATL"},
+    {"tail_number":"A010","base":"ATL"},
+    {"tail_number":"A011","base":"DTW"},
+    {"tail_number":"A012","base":"DTW"},
+    {"tail_number":"A013","base":"DTW"},
+    {"tail_number":"A014","base":"DTW"},
+    {"tail_number":"A015","base":"DTW"},
+    {"tail_number":"A016","base":"DTW"},
+    {"tail_number":"A017","base":"MSP"},
+    {"tail_number":"A018","base":"MSP"},
+    {"tail_number":"A019","base":"MSP"},
+    {"tail_number":"A020","base":"MSP"},
+    {"tail_number":"A021","base":"MSP"},
+    {"tail_number":"A022","base":"STL"},
+    {"tail_number":"A023","base":"STL"},
+    {"tail_number":"A024","base":"STL"},
+    {"tail_number":"A025","base":"CLT"},
+    {"tail_number":"A026","base":"CLT"},
+    {"tail_number":"A027","base":"CLT"},
+    {"tail_number":"A028","base":"BNA"},
+    {"tail_number":"A029","base":"BNA"},
+    {"tail_number":"A030","base":"MCO"},
+    {"tail_number":"A031","base":"MCO"},
+    {"tail_number":"A032","base":"JFK"},
+    {"tail_number":"A033","base":"JFK"},
+    {"tail_number":"A034","base":"ORD"},
+    {"tail_number":"A035","base":"ORD"},
+    {"tail_number":"A037","base":"ATL","reserve":true},
+    {"tail_number":"A038","base":"ATL","reserve":true},
+    {"tail_number":"A039","base":"DTW","reserve":true},
+    {"tail_number":"A040","base":"MSP","reserve":true},
+    {"tail_number":"A041","base":"STL","reserve":true}
 ]

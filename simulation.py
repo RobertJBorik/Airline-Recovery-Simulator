@@ -11,10 +11,10 @@ def build_event_queue(fleet):
 
     for plane in fleet.values():
 
-        if not plane.remaining_flights:
+        if not plane.assigned_flights:
             continue
 
-        first_flight = plane.remaining_flights[0]
+        first_flight = plane.assigned_flights[0]
 
         heapq.heappush(events, Event(time=first_flight.scheduled_departure, event_type="Departure", flight=first_flight))
 
@@ -42,7 +42,3 @@ def reset_simulation(schedule, fleet, routes, config):
 
     for plane in fleet.values():
         plane.reset(config)
-
-    for route in routes.values():
-        route.reset()
-    

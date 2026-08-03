@@ -2,7 +2,7 @@ import heapq
 import random
 
 from classes import Event
-
+from helper import get_next_day_start, get_day_end
 
 def process_event(event, fleet, events, config, metrics):
 
@@ -16,122 +16,83 @@ def process_event(event, fleet, events, config, metrics):
 def process_departure(event, fleet, events, config, metrics):
 
     flight = event.flight
+    total_delay = 0
 
     # Weather delay
     if random.random() < config.weather_delay_probability:
-
         delay = random.randint(config.weather_delay_min, config.weather_delay_max)
 
-        flight.actual_departure += delay
-        flight.actual_arrival += delay
-
-        flight.delay_minutes += delay
         flight.weather_delay += delay
-
+        total_delay += delay
         metrics.add_delay("weather", delay)
-
 
     # Gate delay
     if random.random() < config.gate_delay_probability:
-
         delay = random.randint(config.gate_delay_min, config.gate_delay_max)
 
-        flight.actual_departure += delay
-        flight.actual_arrival += delay
-
-        flight.delay_minutes += delay
         flight.gate_delay += delay
-
+        total_delay += delay
         metrics.add_delay("gate", delay)
-        
+
     # Maintenance delay
     if random.random() < config.maintenance_probability:
-
         delay = random.randint(config.maintenance_delay_min, config.maintenance_delay_max)
 
-        flight.actual_departure += delay
-        flight.actual_arrival += delay
-
-        flight.delay_minutes += delay
         flight.maintenance_delay += delay
-
+        total_delay += delay
         metrics.add_delay("maintenance", delay)
 
+    # Update actual times
+    flight.actual_departure += total_delay
+    flight.actual_arrival += total_delay
 
     flight.status = "Departed"
 
     heapq.heappush(events, Event(time=flight.actual_arrival, event_type="Arrival", flight=flight))
-
 
 def process_arrival(event, fleet, events, config, metrics):
 
     flight = event.flight
     plane = fleet[flight.aircraft_id]
 
-
-    # Update aircraft state
     plane.current_airport = flight.destination
+    plane.available_time = flight.actual_arrival + config.turn_time
 
-    plane.available_time = (flight.actual_arrival + config.turn_time)
-
-    flight.status = "Arrived"
+    flight.status = "Completed"
 
     metrics.completed += 1
-
     metrics.max_delay = max(metrics.max_delay, flight.delay_minutes)
 
-    # Remove completed flight
-    plane.remaining_flights.popleft()
+    plane.next_flight_index += 1
 
-    # No more flights for aircraft
-    if not plane.remaining_flights:
+    if plane.next_flight_index >= len(plane.assigned_flights):
         return
 
-    next_flight = plane.remaining_flights[0]
-
+    next_flight = plane.assigned_flights[plane.next_flight_index]
     
-    propagation_delay = max(0, plane.available_time - next_flight.scheduled_departure)
-    next_flight.delay_minutes += propagation_delay
+    delay = max(0, plane.available_time - next_flight.actual_departure)
 
-    next_flight.actual_departure = next_flight.scheduled_departure + propagation_delay
+    next_flight.actual_departure += delay
+    next_flight.actual_arrival += delay
 
-    next_flight.actual_arrival = next_flight.scheduled_arrival + propagation_delay
+    if delay > 0:
+        next_flight.propagated_delay += delay
+        metrics.add_delay("propagated", delay)
+
+   
+    current_day = next_flight.actual_departure // config.day_minutes
+    current_day_end = current_day * config.day_minutes + config.operating_day_end
+
+    if next_flight.actual_departure > current_day_end:
+        
+        next_flight.actual_departure = get_next_day_start(next_flight.actual_departure, config)
+        next_flight.actual_arrival = next_flight.actual_departure + next_flight.flight_time
+        
+        overnight_delay = next_flight.actual_departure - next_flight.scheduled_departure 
+        next_flight.overnight_delay = overnight_delay
+        metrics.add_delay("overnight", overnight_delay)
+        
+        
+    heapq.heappush(events, Event(next_flight.actual_departure, "Departure", next_flight))
 
 
-    if propagation_delay > 0:
-
-        next_flight.propagated_delay += propagation_delay
-
-        metrics.add_delay("propagated", propagation_delay)
-
-
-    # Previous Flight Canceled
-    if next_flight.actual_departure > config.operating_day_end:
-
-        cancel_remaining_flights(plane, metrics, plane.available_time, reason="Exceeded operating window")
-
-        return
-
-    heapq.heappush(events, Event(time=next_flight.actual_departure, event_type="Departure", flight=next_flight))
-
-
-def cancel_remaining_flights(plane, metrics, current_time, reason):
-
-    while plane.remaining_flights:
-
-        flight = plane.remaining_flights.popleft()
-
-        propagated_delay = max(0, current_time - flight.scheduled_departure)
-
-        flight.delay_minutes = propagated_delay
-        flight.actual_departure = flight.scheduled_departure + propagated_delay
-        flight.actual_arrival = flight.scheduled_arrival + propagated_delay
-        flight.cancel(reason)
-
-        if propagated_delay > 0:
-
-            flight.propagated_delay = propagated_delay
-
-            metrics.add_delay("propagated", propagated_delay)
-
-        metrics.cancelled += 1

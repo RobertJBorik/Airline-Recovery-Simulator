@@ -1,135 +1,75 @@
 [
-    {
-        "origin": "ATL",
-        "destination": "JFK",
-        "flight_time": 135,
-        "flights_per_day": 4,
-        "bidirectional": true
-    },
-    {
-        "origin": "ATL",
-        "destination": "MCO",
-        "flight_time": 100,
-        "flights_per_day": 4,
-        "bidirectional": true
-    },
-    {
-        "origin": "ATL",
-        "destination": "CLT",
-        "flight_time": 75,
-        "flights_per_day": 4,
-        "bidirectional": true
-    },
-    {
-        "origin": "ATL",
-        "destination": "DTW",
-        "flight_time": 120,
-        "flights_per_day": 3,
-        "bidirectional": true
-    },
-    {
-        "origin": "ATL",
-        "destination": "MSP",
-        "flight_time": 150,
-        "flights_per_day": 3,
-        "bidirectional": true
-    },
-    {
-        "origin": "ATL",
-        "destination": "STL",
-        "flight_time": 105,
-        "flights_per_day": 3,
-        "bidirectional": true
-    },
-    {
-        "origin": "ATL",
-        "destination": "BNA",
-        "flight_time": 60,
-        "flights_per_day": 3,
-        "bidirectional": true
-    },
-    {
-        "origin": "DTW",
-        "destination": "MSP",
-        "flight_time": 110,
-        "flights_per_day": 2,
-        "bidirectional": true
-    },
-    {
-        "origin": "DTW",
-        "destination": "STL",
-        "flight_time": 75,
-        "flights_per_day": 2,
-        "bidirectional": true
-    },
-    {
-        "origin": "MSP",
-        "destination": "STL",
-        "flight_time": 70,
-        "flights_per_day": 2,
-        "bidirectional": true
-    },
-    {
-        "origin": "JFK",
-        "destination": "BOS",
-        "flight_time": 60,
-        "flights_per_day": 4,
-        "bidirectional": true
-    },
-    {
-        "origin": "DTW",
-        "destination": "JFK",
-        "flight_time": 105,
-        "flights_per_day": 2,
-        "bidirectional": true
-    },
-    {
-        "origin": "MSP",
-        "destination": "JFK",
-        "flight_time": 150,
-        "flights_per_day": 2,
-        "bidirectional": true
-    },
-    {
-        "origin": "BOS",
-        "destination": "CLT",
-        "flight_time": 120,
-        "flights_per_day": 1,
-        "bidirectional": true
-    },
-    {
-        "origin": "CLT",
-        "destination": "MCO",
-        "flight_time": 100,
-        "flights_per_day": 2,
-        "bidirectional": true
-    },
-    {
-        "origin": "CLT",
-        "destination": "STL",
-        "flight_time": 110,
-        "flights_per_day": 1,
-        "bidirectional": true
-    },
-    {
-        "origin": "MCO",
-        "destination": "STL",
-        "flight_time": 125,
-        "flights_per_day": 1,
-        "bidirectional": true
-    },
-    {
-        "origin": "MCO",
-        "destination": "JFK",
-        "flight_time": 130,
-        "flights_per_day": 2,
-        "bidirectional": true
-    },
-    {
-        "origin": "BNA",
-        "destination": "STL",
-        "flight_time": 70,
-        "flights_per_day": 1,
-        "bidirectional": true
-    }
+  { "origin": "ATL", "destination": "DTW", "bidirectional": true, "route_weight": 10 },
+  { "origin": "ATL", "destination": "MSP", "bidirectional": true, "route_weight": 10 },
+  { "origin": "ATL", "destination": "ORD", "bidirectional": true, "route_weight": 9 },
+  { "origin": "ATL", "destination": "CLT", "bidirectional": true, "route_weight": 9 },
+  { "origin": "ATL", "destination": "STL", "bidirectional": true, "route_weight": 8 },
+  { "origin": "ATL", "destination": "BNA", "bidirectional": true, "route_weight": 8 },
+  { "origin": "ATL", "destination": "MCI", "bidirectional": true, "route_weight": 6 },
+  { "origin": "ATL", "destination": "CVG", "bidirectional": true, "route_weight": 7 },
+  { "origin": "ATL", "destination": "IND", "bidirectional": true, "route_weight": 7 },
+  { "origin": "ATL", "destination": "MEM", "bidirectional": true, "route_weight": 6 },
+  { "origin": "ATL", "destination": "SDF", "bidirectional": true, "route_weight": 5 },
+  { "origin": "ATL", "destination": "DSM", "bidirectional": true, "route_weight": 4 },
+  { "origin": "ATL", "destination": "OMA", "bidirectional": true, "route_weight": 4 },
+  { "origin": "ATL", "destination": "XNA", "bidirectional": true, "route_weight": 4 },
+  { "origin": "ATL", "destination": "TUL", "bidirectional": true, "route_weight": 4 },
+  { "origin": "ATL", "destination": "LIT", "bidirectional": true, "route_weight": 4 },
+  { "origin": "ATL", "destination": "GRR", "bidirectional": true, "route_weight": 5 },
+  { "origin": "ATL", "destination": "MCO", "bidirectional": true, "route_weight": 9 },
+  { "origin": "ATL", "destination": "JFK", "bidirectional": true, "route_weight": 8 },
+
+  { "origin": "DTW", "destination": "MSP", "bidirectional": true, "route_weight": 8 },
+  { "origin": "DTW", "destination": "ORD", "bidirectional": true, "route_weight": 8 },
+  { "origin": "DTW", "destination": "STL", "bidirectional": true, "route_weight": 7 },
+  { "origin": "DTW", "destination": "GRR", "bidirectional": true, "route_weight": 8 },
+  { "origin": "DTW", "destination": "CVG", "bidirectional": true, "route_weight": 7 },
+  { "origin": "DTW", "destination": "IND", "bidirectional": true, "route_weight": 7 },
+  { "origin": "DTW", "destination": "DSM", "bidirectional": true, "route_weight": 5 },
+  { "origin": "DTW", "destination": "OMA", "bidirectional": true, "route_weight": 4 },
+  { "origin": "DTW", "destination": "MCO", "bidirectional": true, "route_weight": 7 },
+  { "origin": "DTW", "destination": "JFK", "bidirectional": true, "route_weight": 7 },
+
+  { "origin": "MSP", "destination": "STL", "bidirectional": true, "route_weight": 7 },
+  { "origin": "MSP", "destination": "ORD", "bidirectional": true, "route_weight": 8 },
+  { "origin": "MSP", "destination": "DSM", "bidirectional": true, "route_weight": 8 },
+  { "origin": "MSP", "destination": "OMA", "bidirectional": true, "route_weight": 7 },
+  { "origin": "MSP", "destination": "GRR", "bidirectional": true, "route_weight": 5 },
+  { "origin": "MSP", "destination": "IND", "bidirectional": true, "route_weight": 5 },
+
+  { "origin": "ORD", "destination": "STL", "bidirectional": true, "route_weight": 8 },
+  { "origin": "ORD", "destination": "BNA", "bidirectional": true, "route_weight": 6 },
+  { "origin": "ORD", "destination": "MCI", "bidirectional": true, "route_weight": 6 },
+  { "origin": "ORD", "destination": "DSM", "bidirectional": true, "route_weight": 6 },
+  { "origin": "ORD", "destination": "OMA", "bidirectional": true, "route_weight": 5 },
+  { "origin": "ORD", "destination": "CVG", "bidirectional": true, "route_weight": 6 },
+
+  { "origin": "CLT", "destination": "STL", "bidirectional": true, "route_weight": 6 },
+  { "origin": "CLT", "destination": "BNA", "bidirectional": true, "route_weight": 6 },
+  { "origin": "CLT", "destination": "MCO", "bidirectional": true, "route_weight": 8 },
+  { "origin": "CLT", "destination": "JFK", "bidirectional": true, "route_weight": 7 },
+
+  { "origin": "STL", "destination": "BNA", "bidirectional": true, "route_weight": 8 },
+  { "origin": "STL", "destination": "MCI", "bidirectional": true, "route_weight": 8 },
+  { "origin": "STL", "destination": "MEM", "bidirectional": true, "route_weight": 7 },
+  { "origin": "STL", "destination": "CVG", "bidirectional": true, "route_weight": 6 },
+  { "origin": "STL", "destination": "IND", "bidirectional": true, "route_weight": 6 },
+  { "origin": "STL", "destination": "SDF", "bidirectional": true, "route_weight": 6 },
+  { "origin": "STL", "destination": "DSM", "bidirectional": true, "route_weight": 5 },
+  { "origin": "STL", "destination": "XNA", "bidirectional": true, "route_weight": 5 },
+  { "origin": "STL", "destination": "TUL", "bidirectional": true, "route_weight": 5 },
+  { "origin": "STL", "destination": "LIT", "bidirectional": true, "route_weight": 5 },
+
+  { "origin": "BNA", "destination": "MEM", "bidirectional": true, "route_weight": 6 },
+  { "origin": "BNA", "destination": "CVG", "bidirectional": true, "route_weight": 5 },
+
+  { "origin": "MCI", "destination": "OMA", "bidirectional": true, "route_weight": 6 },
+  { "origin": "MCI", "destination": "DSM", "bidirectional": true, "route_weight": 6 },
+  { "origin": "MCI", "destination": "TUL", "bidirectional": true, "route_weight": 5 },
+
+  { "origin": "MEM", "destination": "LIT", "bidirectional": true, "route_weight": 6 },
+  { "origin": "MEM", "destination": "XNA", "bidirectional": true, "route_weight": 5 },
+
+  { "origin": "XNA", "destination": "TUL", "bidirectional": true, "route_weight": 4 },
+  { "origin": "DSM", "destination": "OMA", "bidirectional": true, "route_weight": 5 }
 ]

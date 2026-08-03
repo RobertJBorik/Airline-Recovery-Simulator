@@ -1,38 +1,182 @@
 [
   {
     "code": "ATL",
-    "name": "Atlanta"
-  },
-  {
-    "code": "JFK",
-    "name": "New York (JFK)"
+    "name": "Hartsfield-Jackson Atlanta International Airport",
+    "city": "Atlanta",
+    "state": "GA",
+    "hub_size": "major",
+    "latitude": 33.6407,
+    "longitude": -84.4277
   },
   {
     "code": "DTW",
-    "name": "Detroit"
+    "name": "Detroit Metropolitan Wayne County Airport",
+    "city": "Detroit",
+    "state": "MI",
+    "hub_size": "major",
+    "latitude": 42.2162,
+    "longitude": -83.3554
   },
   {
     "code": "MSP",
-    "name": "Minneapolis, St. Paul"
+    "name": "Minneapolis-Saint Paul International Airport",
+    "city": "Minneapolis",
+    "state": "MN",
+    "hub_size": "major",
+    "latitude": 44.8848,
+    "longitude": -93.2223
   },
-    {
-    "code": "BOS",
-    "name": "Boston"
+  {
+    "code": "STL",
+    "name": "St. Louis Lambert International Airport",
+    "city": "St. Louis",
+    "state": "MO",
+    "hub_size": "medium",
+    "latitude": 38.7487,
+    "longitude": -90.3700
+  },
+  {
+    "code": "ORD",
+    "name": "Chicago O'Hare International Airport",
+    "city": "Chicago",
+    "state": "IL",
+    "hub_size": "major",
+    "latitude": 41.9742,
+    "longitude": -87.9073
   },
   {
     "code": "CLT",
-    "name": "Charolette"
-  },
-    {
-    "code": "MCO",
-    "name": "Orlando"
+    "name": "Charlotte Douglas International Airport",
+    "city": "Charlotte",
+    "state": "NC",
+    "hub_size": "major",
+    "latitude": 35.2144,
+    "longitude": -80.9473
   },
   {
     "code": "BNA",
-    "name": "Nashville"
+    "name": "Nashville International Airport",
+    "city": "Nashville",
+    "state": "TN",
+    "hub_size": "medium",
+    "latitude": 36.1263,
+    "longitude": -86.6774
   },
-    {
-    "code": "STL",
-    "name": "St Louis"
+  {
+    "code": "MCI",
+    "name": "Kansas City International Airport",
+    "city": "Kansas City",
+    "state": "MO",
+    "hub_size": "medium",
+    "latitude": 39.2976,
+    "longitude": -94.7139
+  },
+  {
+    "code": "CVG",
+    "name": "Cincinnati/Northern Kentucky International Airport",
+    "city": "Hebron",
+    "state": "KY",
+    "hub_size": "medium",
+    "latitude": 39.0488,
+    "longitude": -84.6678
+  },
+  {
+    "code": "IND",
+    "name": "Indianapolis International Airport",
+    "city": "Indianapolis",
+    "state": "IN",
+    "hub_size": "medium",
+    "latitude": 39.7173,
+    "longitude": -86.2944
+  },
+  {
+    "code": "MEM",
+    "name": "Memphis International Airport",
+    "city": "Memphis",
+    "state": "TN",
+    "hub_size": "medium",
+    "latitude": 35.0425,
+    "longitude": -89.9767
+  },
+  {
+    "code": "SDF",
+    "name": "Louisville Muhammad Ali International Airport",
+    "city": "Louisville",
+    "state": "KY",
+    "hub_size": "small",
+    "latitude": 38.1744,
+    "longitude": -85.7360
+  },
+  {
+    "code": "DSM",
+    "name": "Des Moines International Airport",
+    "city": "Des Moines",
+    "state": "IA",
+    "hub_size": "small",
+    "latitude": 41.5340,
+    "longitude": -93.6631
+  },
+  {
+    "code": "OMA",
+    "name": "Eppley Airfield",
+    "city": "Omaha",
+    "state": "NE",
+    "hub_size": "small",
+    "latitude": 41.3032,
+    "longitude": -95.8941
+  },
+  {
+    "code": "XNA",
+    "name": "Northwest Arkansas National Airport",
+    "city": "Bentonville",
+    "state": "AR",
+    "hub_size": "small",
+    "latitude": 36.2819,
+    "longitude": -94.3068
+  },
+  {
+    "code": "TUL",
+    "name": "Tulsa International Airport",
+    "city": "Tulsa",
+    "state": "OK",
+    "hub_size": "small",
+    "latitude": 36.1984,
+    "longitude": -95.8881
+  },
+  {
+    "code": "LIT",
+    "name": "Bill and Hillary Clinton National Airport",
+    "city": "Little Rock",
+    "state": "AR",
+    "hub_size": "small",
+    "latitude": 34.7294,
+    "longitude": -92.2243
+  },
+  {
+    "code": "GRR",
+    "name": "Gerald R. Ford International Airport",
+    "city": "Grand Rapids",
+    "state": "MI",
+    "hub_size": "small",
+    "latitude": 42.8808,
+    "longitude": -85.5228
+  },
+  {
+    "code": "MCO",
+    "name": "Orlando International Airport",
+    "city": "Orlando",
+    "state": "FL",
+    "hub_size": "major",
+    "latitude": 28.4312,
+    "longitude": -81.3081
+  },
+  {
+    "code": "JFK",
+    "name": "John F. Kennedy International Airport",
+    "city": "New York",
+    "state": "NY",
+    "hub_size": "major",
+    "latitude": 40.6413,
+    "longitude": -73.7781
   }
 ]

@@ -13,6 +13,7 @@ class SimulationMetrics:
     gate_delay_minutes: int = 0
     maintenance_delay_minutes: int = 0
     propagated_delay_minutes: int = 0
+    pushed_overnight_minutes: int = 0
 
     def add_delay(self, delay_type, minutes):
         self.total_delay_minutes += minutes
@@ -28,6 +29,9 @@ class SimulationMetrics:
 
         elif delay_type == "propagated":
             self.propagated_delay_minutes += minutes
+            
+        elif delay_type == "overnight":
+            self.pushed_overnight_minutes += minutes
 
 
     def summary(self):
