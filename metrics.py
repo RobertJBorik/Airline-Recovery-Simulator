@@ -66,3 +66,4 @@ class SimulationMetrics:
         self.gate_delay_minutes = 0
         self.maintenance_delay_minutes = 0
         self.propagated_delay_minutes = 0
+        self.pushed_overnight_minutes = 0
