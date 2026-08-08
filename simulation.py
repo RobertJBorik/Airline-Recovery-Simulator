@@ -1,7 +1,7 @@
 import heapq
 import random
 
-from classes import Event
+from classes import Event, SimulationState
 from metrics import SimulationMetrics
 from events import process_event
 
@@ -29,9 +29,11 @@ def run_simulation(schedule, fleet, routes, config, simulation_seed):
     
     events = build_event_queue(fleet)
 
+    state = SimulationState(schedule, fleet, events, metrics, config)
+        
     while events:
         event = heapq.heappop(events)
-        process_event(event, fleet, events, config, metrics)
+        process_event(event, state)
         
     return metrics
 

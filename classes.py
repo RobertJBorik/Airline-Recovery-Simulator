@@ -4,6 +4,7 @@ from math import radians, sin, cos, sqrt, atan2
 from dataclasses import dataclass, field
 from collections import deque
 
+
 @dataclass
 class Airport:
     code: str
@@ -141,3 +142,11 @@ class Event:
     time: int
     event_type: str      # Departure / Arrival #TODO define enum to rpevent typos
     flight: Flight = field(compare=False)        
+    
+@dataclass
+class SimulationState:
+    flights: dict[str, Flight]
+    fleet: dict[str, Aircraft]
+    events: list[Event]
+    metrics: SimulationMetrics
+    config: Config
