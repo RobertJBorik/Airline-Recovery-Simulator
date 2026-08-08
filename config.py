@@ -2,6 +2,8 @@ from dataclasses import dataclass
 
 @dataclass
 class Config:
+    #Recovery Method
+    recovery_strategy = "none"
     # Simulation
     simulation_days: int = 7
     day_minutes: int = 1440

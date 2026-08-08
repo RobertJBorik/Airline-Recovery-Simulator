@@ -1,6 +1,7 @@
 import heapq
 import random
 
+from recovery.manager import RecoveryManager
 from classes import Event, SimulationState
 from metrics import SimulationMetrics
 from events import process_event
@@ -29,9 +30,10 @@ def run_simulation(schedule, fleet, routes, config, simulation_seed):
     
     events = build_event_queue(fleet)
 
-    state = SimulationState(schedule, fleet, events, metrics, config)
+    recovery = RecoveryManager(config.recovery_strategy)
+    state = SimulationState(schedule, fleet, events, metrics, config, recovery)
         
-    while events:
+    while state.events:
         event = heapq.heappop(events)
         process_event(event, state)
         

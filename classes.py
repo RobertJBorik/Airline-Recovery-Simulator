@@ -1,8 +1,9 @@
 from __future__ import annotations
 from math import radians, sin, cos, sqrt, atan2
-
 from dataclasses import dataclass, field
 from collections import deque
+
+from recovery.manager import RecoveryManager
 
 
 @dataclass
@@ -150,3 +151,4 @@ class SimulationState:
     events: list[Event]
     metrics: SimulationMetrics
     config: Config
+    recovery_manager: object #RecoveryManager future proofing circular import

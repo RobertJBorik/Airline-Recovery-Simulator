@@ -46,8 +46,12 @@ def process_departure(event, state):
     flight.actual_departure += total_delay
     flight.actual_arrival += total_delay
 
-    flight.status = "Departed"
+    # Recovery
+    if total_delay > 0:
+        state.recovery_manager.recover(event, total_delay, state)
 
+    flight.status = "Departed"
+    
     heapq.heappush(state.events, Event(time=flight.actual_arrival, event_type="Arrival", flight=flight))
 
 def process_arrival(event, state):
