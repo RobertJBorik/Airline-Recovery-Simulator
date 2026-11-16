@@ -14,6 +14,13 @@ class SimulationMetrics:
     maintenance_delay_minutes: int = 0
     propagated_delay_minutes: int = 0
     pushed_overnight_minutes: int = 0
+    recovery_opportunities: int = 0
+    reserve_activations: int = 0
+    aircraft_swaps: int = 0
+    cyclical_aircraft_swaps: int = 0
+    reserve_reposition_count: int = 0
+    reserve_reposition_minutes: int = 0
+    recovered_delay_minutes: int = 0
 
     def add_delay(self, delay_type, minutes):
         self.total_delay_minutes += minutes
@@ -53,6 +60,14 @@ class SimulationMetrics:
             "gate_delay": self.gate_delay_minutes,
             "maintenance_delay": self.maintenance_delay_minutes,
             "propagated_delay": self.propagated_delay_minutes,
+            "overnight_delay": self.pushed_overnight_minutes,
+            "recovery_opportunities": self.recovery_opportunities,
+            "reserve_activations": self.reserve_activations,
+            "aircraft_swaps": self.aircraft_swaps,
+            "cyclical_aircraft_swaps": self.cyclical_aircraft_swaps,
+            "reserve_reposition_count": self.reserve_reposition_count,
+            "reserve_reposition_minutes": self.reserve_reposition_minutes,
+            "recovered_delay_minutes": self.recovered_delay_minutes,
         }
     def reset(self):
         self.total_flights = 0
@@ -67,3 +82,10 @@ class SimulationMetrics:
         self.maintenance_delay_minutes = 0
         self.propagated_delay_minutes = 0
         self.pushed_overnight_minutes = 0
+        self.recovery_opportunities = 0
+        self.reserve_activations = 0
+        self.aircraft_swaps = 0
+        self.cyclical_aircraft_swaps = 0
+        self.reserve_reposition_count = 0
+        self.reserve_reposition_minutes = 0
+        self.recovered_delay_minutes = 0

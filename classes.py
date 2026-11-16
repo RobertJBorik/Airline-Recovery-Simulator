@@ -3,6 +3,8 @@ from math import radians, sin, cos, sqrt, atan2
 from dataclasses import dataclass, field
 from collections import deque
 
+from config import Config
+from metrics import SimulationMetrics
 from recovery.manager import RecoveryManager
 
 
@@ -52,15 +54,26 @@ class Aircraft:
     total_flights: int = 0
     total_flight_minutes: int = 0
 
+    @property
+    def remaining_flights(self):
+        return self.assigned_flights[self.next_flight_index:]
+
+    @remaining_flights.setter
+    def remaining_flights(self, flights):
+        self.assigned_flights = list(flights)
+        self.next_flight_index = 0
+
     def __post_init__(self):
         self.current_airport = self.base
 
     def clear_schedule(self):
         self.assigned_flights.clear()
+        self.next_flight_index = 0
     
     def reset(self, config):
         self.current_airport = self.base
         self.available_time = config.operating_day_start
+        self.next_flight_index = 0
         self.total_flights = 0
         self.total_flight_minutes = 0
     
@@ -81,6 +94,10 @@ class Flight:
     maintenance_delay: int = 0
     propagated_delay: int = 0
     overnight_delay: int = 0
+    recovery_applied: bool = False
+    recovery_action: str | None = None
+    recovery_aircraft_id: str | None = None
+    recovery_reposition_minutes: int = 0
 
     cancellation_reason: str | None = None
     status: str = "Scheduled"
@@ -118,6 +135,11 @@ class Flight:
         self.gate_delay = 0
         self.maintenance_delay = 0
         self.propagated_delay = 0
+        self.overnight_delay = 0
+        self.recovery_applied = False
+        self.recovery_action = None
+        self.recovery_aircraft_id = None
+        self.recovery_reposition_minutes = 0
 
         self.status = "Scheduled"
         self.cancellation_reason = None
@@ -146,9 +168,11 @@ class Event:
     
 @dataclass
 class SimulationState:
-    flights: dict[str, Flight]
+    flights: list[Flight]
     fleet: dict[str, Aircraft]
     events: list[Event]
     metrics: SimulationMetrics
     config: Config
-    recovery_manager: object #RecoveryManager future proofing circular import
+    recovery_manager: object 
+    simulation_seed: int = 0
+    airports: dict[str, Airport] | None = None

@@ -1,3 +1,6 @@
+from collections import deque
+
+
 def format_time(minutes):
     hours = minutes // 60
     mins = minutes % 60
@@ -57,12 +60,13 @@ def reset_fleet(fleet):
         plane.available_time = 360
         plane.remaining_flights = deque(plane.assigned_flights)
         
-def collect_flight_results(schedule, simulation):
+def collect_flight_results(schedule, simulation, recovery_strategy="none"):
     rows = []
 
     for flight in schedule:
         rows.append({
             "simulation_num": simulation,
+            "recovery_strategy": recovery_strategy,
             "flight_id": flight.flight_id,
             "aircraft": flight.aircraft_id,
             "simulation_day": flight.simulation_day,
@@ -80,7 +84,10 @@ def collect_flight_results(schedule, simulation):
             "propagated_delay": flight.propagated_delay,
             "status": flight.status,
             "reason": flight.cancellation_reason,
-            
+            "recovery_applied": flight.recovery_applied,
+            "recovery_action": flight.recovery_action,
+            "recovery_aircraft": flight.recovery_aircraft_id,
+            "recovery_reposition_minutes": flight.recovery_reposition_minutes,
         })
 
     return rows

@@ -1,4 +1,6 @@
+import csv
 from collections import defaultdict
+from pathlib import Path
 from classes import Flight
 from helper import get_day_start, get_day_end, get_next_day_start
 #Build Schedule
@@ -15,6 +17,7 @@ def generate_schedule(airports, fleet, routes, config):
         for plane in fleet.values():
 
             if day == 1:
+                plane.clear_schedule()
                 plane.reset(config)
                 plane.available_time = day_start
 
@@ -29,6 +32,9 @@ def generate_schedule(airports, fleet, routes, config):
             aircraft_queue = sorted(fleet.values(), key=lambda plane: plane.available_time)
 
             for plane in aircraft_queue:
+                
+                if plane.reserve:
+                    continue
 
                 if plane.available_time >= day_end:
                     continue
@@ -108,10 +114,11 @@ def score_route(plane, route, airports, fleet, routes, config, flight_time, curr
 
     # Return to Base Bonus
     if route.destination == plane.base:
-        remaining_time = config.operating_day_end - plane.available_time
-        urgency = 1 - (remaining_time / config.operating_day_length)
-
-        score += config.BASE_RETURN_BONUS * urgency
+        arrival_time = plane.available_time + flight_time
+        if arrival_time <= config.operating_day_end:
+            remaining_time = config.operating_day_end - arrival_time
+            urgency = 1 - (remaining_time / config.operating_day_length)
+            score += config.BASE_RETURN_BONUS * max(0, urgency)
 
     # Avoid stranded aircraft
     future_routes = [r for r in routes.values() if r.origin == destination.code]
@@ -172,4 +179,38 @@ def update_aircraft(plane, flight, config):
 
     plane.total_flights += 1
     plane.total_flight_minutes += flight.flight_time
+
+
+def main():
+    from config import Config
+    from loaders import load_aircraft, load_airports, load_routes
+
+    config = Config()
+    airports = load_airports("data/airports.json")
+    fleet = load_aircraft("data/aircraft.json")
+    routes = load_routes("data/routes.json")
+    schedule = generate_schedule(airports, fleet, routes, config)
+
+    output_path = Path("results/schedule.csv")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    fieldnames = [
+        "flight_id",
+        "aircraft_id",
+        "simulation_day",
+        "origin",
+        "destination",
+        "scheduled_departure",
+        "scheduled_arrival",
+    ]
+    with output_path.open("w", newline="", encoding="utf-8") as output_file:
+        writer = csv.DictWriter(output_file, fieldnames=fieldnames)
+        writer.writeheader()
+        for flight in schedule:
+            writer.writerow({field: getattr(flight, field) for field in fieldnames})
+
+    print(f"Generated {len(schedule)} flights: {output_path}")
+
+
+if __name__ == "__main__":
+    main()
     

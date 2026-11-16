@@ -16,27 +16,28 @@ def process_event(event, state):
 def process_departure(event, state):
 
     flight = event.flight
+    flight_rng = random.Random(f"{state.simulation_seed}:{flight.flight_id}")
     total_delay = 0
 
     # Weather delay
-    if random.random() < state.config.weather_delay_probability:
-        delay = random.randint(state.config.weather_delay_min, state.config.weather_delay_max)
+    if flight_rng.random() < state.config.weather_delay_probability:
+        delay = flight_rng.randint(state.config.weather_delay_min, state.config.weather_delay_max)
 
         flight.weather_delay += delay
         total_delay += delay
         state.metrics.add_delay("weather", delay)
 
     # Gate delay
-    if random.random() < state.config.gate_delay_probability:
-        delay = random.randint(state.config.gate_delay_min, state.config.gate_delay_max)
+    if flight_rng.random() < state.config.gate_delay_probability:
+        delay = flight_rng.randint(state.config.gate_delay_min, state.config.gate_delay_max)
 
         flight.gate_delay += delay
         total_delay += delay
         state.metrics.add_delay("gate", delay)
 
     # Maintenance delay
-    if random.random() < state.config.maintenance_probability:
-        delay = random.randint(state.config.maintenance_delay_min, state.config.maintenance_delay_max)
+    if flight_rng.random() < state.config.maintenance_probability:
+        delay = flight_rng.randint(state.config.maintenance_delay_min, state.config.maintenance_delay_max)
 
         flight.maintenance_delay += delay
         total_delay += delay
@@ -45,10 +46,6 @@ def process_departure(event, state):
     # Update actual times
     flight.actual_departure += total_delay
     flight.actual_arrival += total_delay
-
-    # Recovery
-    if total_delay > 0:
-        state.recovery_manager.recover(event, total_delay, state)
 
     flight.status = "Departed"
     
@@ -76,27 +73,47 @@ def process_arrival(event, state):
     
     delay = max(0, plane.available_time - next_flight.actual_departure)
 
+    recovered = False
+    if delay >= state.config.recovery_threshold_minutes:
+        state.metrics.recovery_opportunities += 1
+        recovered = state.recovery_manager.recover(event, delay, state)
+
+    if recovered:
+        return
+
     next_flight.actual_departure += delay
     next_flight.actual_arrival += delay
 
-    if delay > 0:
+    if delay > 0 and not recovered:
         next_flight.propagated_delay += delay
         state.metrics.add_delay("propagated", delay)
 
    
     current_day = next_flight.actual_departure // state.config.day_minutes
+    current_day_start = (
+        current_day * state.config.day_minutes
+        + state.config.operating_day_start
+    )
     current_day_end = current_day * state.config.day_minutes + state.config.operating_day_end
 
-    if next_flight.actual_departure > current_day_end:
-        
+    if next_flight.actual_departure < current_day_start:
+        pre_overnight_departure = next_flight.actual_departure
+        next_flight.actual_departure = current_day_start
+        next_flight.actual_arrival = (
+            next_flight.actual_departure + next_flight.flight_time
+        )
+
+        overnight_delay = next_flight.actual_departure - pre_overnight_departure
+        next_flight.overnight_delay += overnight_delay
+        state.metrics.add_delay("overnight", overnight_delay)
+    elif next_flight.actual_departure > current_day_end:
+        pre_overnight_departure = next_flight.actual_departure
         next_flight.actual_departure = get_next_day_start(next_flight.actual_departure, state.config)
         next_flight.actual_arrival = next_flight.actual_departure + next_flight.flight_time
         
-        overnight_delay = next_flight.actual_departure - next_flight.scheduled_departure 
-        next_flight.overnight_delay = overnight_delay
+        overnight_delay = next_flight.actual_departure - pre_overnight_departure
+        next_flight.overnight_delay += overnight_delay
         state.metrics.add_delay("overnight", overnight_delay)
         
         
     heapq.heappush(state.events, Event(next_flight.actual_departure, "Departure", next_flight))
-
-

@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from pathlib import Path
 
 from dashboard_tabs import analytics
 from dashboard_tabs import flight
@@ -13,11 +14,24 @@ st.title("Airline Operations Recovery & Delay Propagation Simulator")
 
 @st.cache_data
 def load_data():
-    results = pd.read_csv("results/simulation_results.csv")
-    flights = pd.read_csv("results/flight_results.csv")
+    results_path = Path("results/simulation_results.csv")
+    flights_path = Path("results/flight_results.csv")
+    if not results_path.is_file() or not flights_path.is_file():
+        raise FileNotFoundError("Run `python main.py` to generate dashboard results.")
+
+    results = pd.read_csv(results_path)
+    flights = pd.read_csv(flights_path)
     return results, flights
 
-results_df, flights_df = load_data()
+try:
+    results_df, flights_df = load_data()
+except (FileNotFoundError, pd.errors.EmptyDataError) as error:
+    st.warning(str(error))
+    st.stop()
+
+if results_df.empty or flights_df.empty:
+    st.warning("No simulation results are available. Run `python main.py` to generate them.")
+    st.stop()
 
 st.divider()
 
@@ -25,7 +39,7 @@ col1, col2, col3, col4 = st.columns(4)
 
 with col1:
     st.metric(
-        "Flights Simulated",
+        "Flight Records",
         f"{len(flights_df):,}"
     )
 

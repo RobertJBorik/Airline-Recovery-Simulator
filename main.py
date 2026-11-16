@@ -9,7 +9,16 @@ from simulation import run_simulation
 from helper import collect_flight_results, print_schedule
 
 
-def run_experiment(num_simulations=50):
+def run_experiment(
+    num_simulations=50,
+    strategies=(
+        "none",
+        "activateReserve",
+        "activateReserveReposition",
+        "aircraftSwap",
+        "cyclicalAircraftSwap",
+    ),
+):
     config = Config()
 
     airports = load_airports("data/airports.json")
@@ -17,36 +26,35 @@ def run_experiment(num_simulations=50):
     routes = load_routes("data/routes.json")
 
     master_rng = random.Random(config.random_seed)
-    simulation_seeds = [
-        master_rng.randint(0, 2**32 - 1)
-        for _ in range(num_simulations)
-    ]
+    simulation_seeds = [master_rng.randint(0, 2**32 - 1) for _ in range(num_simulations)]
 
-    # Generate base schedule once
+    # Generate base schedule
     generate_schedule(airports, aircraft, routes, config)
 
     sim_results = []
     flight_results = []
 
-    for i, seed in enumerate(simulation_seeds):
+    for strategy in strategies:
+        config.recovery_strategy = strategy
 
-        if i % 25 == 0:
-            print(f"Simulation {i} currently running")
+        for i, seed in enumerate(simulation_seeds):
+            if i % 25 == 0:
+                print(f"{strategy}: simulation {i} currently running")
 
-        sim_aircraft = copy.deepcopy(aircraft)
-        sim_schedule = []
+            sim_aircraft = copy.deepcopy(aircraft)
+            sim_schedule = []
 
-        for plane in sim_aircraft.values():
-            sim_schedule.extend(plane.assigned_flights)
+            for plane in sim_aircraft.values():
+                sim_schedule.extend(plane.assigned_flights)
 
-        # Optional check
-        # print(sim_schedule[0] is sim_aircraft["A001"].assigned_flights[0])
+            metrics = run_simulation(sim_schedule, sim_aircraft, config, seed, airports=airports)
 
-        metrics = run_simulation(sim_schedule, sim_aircraft, routes, config, seed)
+            simulation_result = metrics.summary()
+            simulation_result["simulation_num"] = i
+            simulation_result["recovery_strategy"] = strategy
+            sim_results.append(simulation_result)
 
-        sim_results.append(metrics.summary())
-
-        flight_results.extend(collect_flight_results(sim_schedule, i))
+            flight_results.extend(collect_flight_results(sim_schedule, i, strategy))
 
     results_df = pd.DataFrame(sim_results)
     flights_df = pd.DataFrame(flight_results)

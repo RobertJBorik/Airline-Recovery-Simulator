@@ -1,6 +1,4 @@
 import heapq
-import random
-
 from recovery.manager import RecoveryManager
 from classes import Event, SimulationState
 from metrics import SimulationMetrics
@@ -21,28 +19,35 @@ def build_event_queue(fleet):
 
     return events
 
-def run_simulation(schedule, fleet, routes, config, simulation_seed):
-    random.seed(simulation_seed)
-    reset_simulation(schedule, fleet, routes, config)
+def run_simulation(schedule, fleet, config, simulation_seed, airports=None):
+    state = SimulationState(
+        flights=schedule,
+        fleet=fleet,
+        events=[],
+        metrics=SimulationMetrics(),
+        config=config,
+        recovery_manager=RecoveryManager(config.recovery_strategy),
+        simulation_seed=simulation_seed,
+        airports=airports,
+    )
 
-    metrics = SimulationMetrics()
-    metrics.total_flights = len(schedule)
-    
-    events = build_event_queue(fleet)
+    reset_simulation(state)
+    state.events.extend(build_event_queue(state.fleet))
 
-    recovery = RecoveryManager(config.recovery_strategy)
-    state = SimulationState(schedule, fleet, events, metrics, config, recovery)
-        
     while state.events:
-        event = heapq.heappop(events)
+        event = heapq.heappop(state.events)
         process_event(event, state)
         
-    return metrics
+    return state.metrics
 
-def reset_simulation(schedule, fleet, routes, config):
+def reset_simulation(state):
 
-    for flight in schedule:
+    for flight in state.flights:
         flight.reset()
 
-    for plane in fleet.values():
-        plane.reset(config)
+    for plane in state.fleet.values():
+        plane.reset(state.config)
+
+    state.events.clear()
+    state.metrics.reset()
+    state.metrics.total_flights = len(state.flights)
