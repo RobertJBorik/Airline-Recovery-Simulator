@@ -48,12 +48,6 @@ Install runtime dependencies from the repository root:
 python -m pip install -r requirements.txt
 ```
 
-Run the standard-library test suite:
-
-```powershell
-python -m unittest discover -s tests -v
-```
-
 ## Data Flow
 
 The scheduler reads JSON inputs and creates rotations. The simulator reuses that schedule across paired random seeds and writes summary and flight-level CSVs. The dashboard consumes those CSV artifacts; it does not run simulations itself.
